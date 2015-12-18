@@ -1,8 +1,8 @@
 .idea/
 *.iml
 
-/SparkJava/.gradle
-/SparkJava/gradle
-/SparkJava/gradlew.bat
-/SparkJava/gradlew
-/SparkJava/build
+*/.gradle/
+*/gradle/
+*/gradlew.bat
+*/gradlew
+*/build/
