@@ -2,12 +2,14 @@ module.exports = function (grunt) {
 
   // Autoload grunt tasks
   require('load-grunt-tasks')(grunt);
+  var serveStatic = require('serve-static');
 
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist',
-    tmp: '.tmp',
-    server: 'server'
+    tmp: 'tmp',
+    server: 'server',
+    bower: 'bower_components'
   };
 
   grunt.initConfig({
@@ -51,43 +53,23 @@ module.exports = function (grunt) {
       }
     },
 
-    // Start grunt server
-    //connect: {
-    //  options: {
-    //    port: 9000,
-    //    hostname: 'localhost',
-    //    livereload: 35729,
-    //    open: false
-    //  },
-    //  livereload: {
-    //    options: {
-    //      open: false,
-    //      middleware: function (connect) {
-    //        return [
-    //          connect.static(appConfig.server), // Use files from tmp directory to run
-    //          connect().use('/bower_components', connect.static('./bower_components'))
-    //        ];
-    //      }
-    //    }
-    //  }
-    //}
-
     // Start server
     connect: {
       options: {
         port: 9000,
-        //base: '<%= config.server %>',
         hostname: 'localhost',
-        livereload: 35729
+        livereload: 35729,
+        middleware: function (connect) {
+          return [
+            serveStatic(appConfig.server),
+            connect().use('/bower_components', serveStatic(appConfig.bower))
+          ];
+        }
       },
 
       livereload: {
-        open: true,
-        middleware: function (connect) {
-          return [
-            connect.static(appConfig.server),
-            connect().use('/bower_components', connect.static('./bower_components'))
-          ];
+        options: {
+          open: false
         }
       }
     }
