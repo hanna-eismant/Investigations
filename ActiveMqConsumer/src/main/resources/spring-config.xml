@@ -26,20 +26,14 @@
         <constructor-arg ref="activeMQConnectionFactory"/>
     </bean>
 
-    <bean class="org.apache.activemq.command.ActiveMQQueue"
-          id="activeMqQueue">
-        <constructor-arg value="investQueue"/>
-    </bean>
+    <bean class="investigations.activemq.Consumer"
+          id="consumer"/>
 
-    <bean class="org.springframework.jms.core.JmsTemplate"
-          id="jmsTemplate">
+    <bean class="org.springframework.jms.listener.SimpleMessageListenerContainer"
+          id="messageListenerContainer">
         <property name="connectionFactory" ref="cachingConnectionFactory"/>
-        <property name="defaultDestination" ref="activeMqQueue"/>
-    </bean>
-
-    <bean class="investigations.activemq.Sender"
-          id="sender">
-        <constructor-arg ref="jmsTemplate"/>
+        <property name="destinationName" value="investQueue"/>
+        <property name="messageListener" ref="consumer"/>
     </bean>
 
 </beans>

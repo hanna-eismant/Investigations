@@ -1,0 +1,20 @@
+group 'investiogations'
+version '1.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.springframework:spring-context:4.2.5.RELEASE"
+    compile "org.springframework:spring-jms:4.2.5.RELEASE"
+    compile "org.springframework.integration:spring-integration-jms:4.2.5.RELEASE"
+
+    compile "org.apache.activemq:activemq-broker:5.13.2"
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
